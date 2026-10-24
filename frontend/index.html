@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MailFlow — Team Email Studio</title>
+<meta name="description" content="Personalized email campaigns powered by Google Sheets and Apps Script.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#f4f6fb;--panel:#fff;--ink:#172033;--muted:#69758a;--line:#e3e8f1;--blue:#315ee8;--blue2:#2449c8;--green:#16834a;--red:#b42318;--shadow:0 10px 30px #20355a0c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "DM Sans",system-ui,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}.wrap{max-width:1400px;margin:auto;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;color:#fff;font-size:22px;background:linear-gradient(140deg,#315ee8,#7a5cff);box-shadow:0 9px 20px #315ee82b}.brand h1{font:800 22px Manrope;margin:0;letter-spacing:-.6px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.topright{display:flex;align-items:center;gap:10px}.pill{padding:7px 10px;border-radius:999px;font-size:11px;font-weight:800;background:#fff0d5;color:#8a5600}.pill.safe{background:#e3f8ec;color:#146b40}.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:700;font-size:12px;display:inline-flex;align-items:center;justify-content:center;gap:7px}.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--blue2)}.secondary{background:#edf1f7;color:#344056}.danger{background:#b42318;color:#fff}.btn:disabled{opacity:.45;cursor:not-allowed}.banner{padding:13px 16px;border:1px solid #f0d89a;background:#fff8e7;color:#76520c;border-radius:13px;margin-bottom:18px;font-size:12px}.gridstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.stat{padding:16px}.stat small{color:var(--muted);font-size:11px}.stat strong{display:block;font:800 27px Manrope;margin-top:4px}.layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(350px,.88fr);gap:17px;align-items:start}.panel{padding:20px;min-width:0}.panel h2{font:800 16px Manrope;margin:0}.muted{color:var(--muted);font-size:12px}.panelhead{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:16px}.field{margin:13px 0}.field label{display:block;font-weight:700;font-size:12px;margin-bottom:6px}input,textarea,select{width:100%;border:1px solid #d9e0ec;border-radius:10px;background:#fff;padding:11px 12px;outline:none;color:var(--ink)}input:focus,textarea:focus,select:focus{border-color:#7c98ff;box-shadow:0 0 0 3px #315ee815}textarea{min-height:185px;resize:vertical;line-height:1.7}.tokens{display:flex;gap:6px;flex-wrap:wrap}.token{border:1px solid var(--line);background:#f7f9fd;border-radius:7px;padding:5px 8px;font-size:11px;color:#3f4c63}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.tabs{display:flex;gap:5px;background:#f1f4f9;border-radius:11px;padding:4px;margin:12px 0}.tab{flex:1;border:0;background:transparent;border-radius:8px;padding:9px 8px;font-size:12px;font-weight:700;color:var(--muted)}.tab.active{background:#fff;color:var(--blue);box-shadow:0 1px 4px #243a6015}.sourcebox{border:1px dashed #ccd6e7;border-radius:12px;padding:14px;background:#fafcff}.sourcebox p{margin:5px 0 12px}.emailcard{border:1px solid var(--line);border-radius:13px;overflow:hidden}.emailhead{background:#f8faff;border-bottom:1px solid var(--line);padding:12px 14px}.emailhead small{display:block;font-size:10px;color:var(--muted);margin-bottom:3px}.emailhead strong{font-size:12px;overflow-wrap:anywhere}.emailbody{white-space:pre-wrap;overflow-wrap:anywhere;min-height:170px;padding:17px 14px;line-height:1.7}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.metric{padding:10px;background:#f6f8fc;border-radius:10px}.metric small{display:block;color:var(--muted);font-size:10px}.metric strong{font:800 18px Manrope}.tablewrap{overflow:auto;max-height:310px;border:1px solid var(--line);border-radius:11px;margin-top:10px}table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}td,th{padding:10px 11px;text-align:left;border-bottom:1px solid var(--line)}th{background:#f8faff;position:sticky;top:0;color:var(--muted)}tr:last-child td{border-bottom:0}.tag{padding:3px 6px;border-radius:6px;background:#eef1f6;font-size:10px}.tag.sent{background:#ddf7e9;color:#116b40}.tag.error{background:#ffebe9;color:#a5261b}.notice{padding:10px 12px;border-radius:10px;margin-top:12px;background:#edf4ff;color:#244b9d;font-size:12px;white-space:pre-wrap}.notice.error{background:#fff0ef;color:#a5261b}.notice.success{background:#e5f8ec;color:#126a40}.footer{text-align:center;color:var(--muted);font-size:11px;padding:22px}.overlay{position:fixed;inset:0;background:#101827a8;display:none;align-items:center;justify-content:center;padding:16px;z-index:5}.overlay.show{display:flex}.modal{background:#fff;border-radius:19px;width:min(500px,100%);padding:23px;box-shadow:0 25px 90px #0004}.modal h2{font:800 20px Manrope;margin:0 0 8px}.modal p{font-size:12px;color:var(--muted)}.check{display:flex;gap:9px;align-items:flex-start;font-size:12px;font-weight:600;margin:14px 0}.check input{width:auto;margin-top:3px}.modal .actions{justify-content:flex-end}.login{max-width:430px;margin:8vh auto;padding:26px}.login h2{font:800 23px Manrope;margin:0}.login .logo{margin-bottom:18px}.smallnote{font-size:11px;color:var(--muted);margin-top:9px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.gridstats{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding:15px}.panel{padding:16px}}@media(max-width:500px){.top{align-items:flex-start}.topright{flex-direction:column;align-items:flex-end}.brand h1{font-size:19px}.stat{padding:12px}.stat strong{font-size:23px}.actions .btn{flex:1}.metrics{gap:5px}.metric{padding:8px}}
+</style>
+</head>
+<body>
+<div id="loginView" class="panel login">
+  <div class="logo">✉</div><h2>Welcome to MailFlow</h2><p class="muted">Sign in with your team's shared access code.</p>
+  <div class="field"><label for="accessCode">Team access code</label><input id="accessCode" type="password" autocomplete="current-password" placeholder="Enter access code"></div>
+  <button class="btn primary" id="loginBtn" style="width:100%">Connect securely →</button>
+  <div id="loginMsg" class="notice error hidden"></div>
+  <p class="smallnote">Your access code is configured by the app owner in Google Apps Script properties. Never commit it to GitHub.</p>
+</div>
+<div id="appView" class="hidden">
+<main class="wrap">
+<header class="top"><div class="brand"><div class="logo">✉</div><div><h1>MailFlow</h1><p>Team email campaign studio</p></div></div><div class="topright"><span id="modePill" class="pill">SAFE MODE</span><button id="logoutBtn" class="btn secondary">Sign out</button></div></header>
+<div id="safetyBanner" class="banner"><b>Safe mode:</b> real email sending is disabled until the owner explicitly enables it in Apps Script.</div>
+<section class="gridstats"><div class="stat"><small>Contacts loaded</small><strong id="statContacts">0</strong></div><div class="stat"><small>Eligible contacts</small><strong id="statEligible">0</strong></div><div class="stat"><small>Already sent</small><strong id="statSent">0</strong></div><div class="stat"><small>Remaining daily quota</small><strong id="statQuota">—</strong></div></section>
+<div class="layout">
+<section class="panel">
+<div class="panelhead"><div><h2>Contacts</h2><div class="muted">Load from your Google Sheet or import CSV/Excel.</div></div><button id="reloadBtn" class="btn secondary">↻ Reload</button></div>
+<div class="tabs"><button class="tab active" data-tab="sheet">Google Sheets</button><button class="tab" data-tab="file">CSV / Excel</button></div>
+<div id="sheetSource" class="sourcebox"><b>Connected spreadsheet</b><p class="muted">Contacts are loaded from the spreadsheet configured in Apps Script.</p><button class="btn secondary" id="loadSheetBtn">Load sheet contacts</button></div>
+<div id="fileSource" class="sourcebox hidden"><b>Import a contact file</b><p class="muted">CSV, XLS or XLSX. First row must contain headings such as Name, Email, Company and Role.</p><input type="file" id="fileInput" accept=".csv,.xlsx,.xls"><div class="smallnote">Excel parsing uses SheetJS from a CDN. CSV import also works without Excel parsing.</div><button class="btn secondary" id="importFileBtn" style="margin-top:10px">Import selected file</button></div>
+<div class="field"><label for="searchContacts">Search contacts</label><input id="searchContacts" placeholder="Search name, email, company…"></div>
+<div class="tablewrap"><table><thead><tr><th>Name</th><th>Email</th><th>Company</th><th>Status</th></tr></thead><tbody id="contactRows"><tr><td colspan="4">Sign in to load contacts.</td></tr></tbody></table></div>
+<div id="contactsMsg" class="notice hidden"></div>
+</section>
+<section class="panel">
+<div class="panelhead"><div><h2>Compose email</h2><div class="muted">Personalize each email with merge fields.</div></div></div>
+<div class="field"><label for="subject">Subject</label><input id="subject" maxlength="250" value="A quick hello"></div>
+<div class="field"><label for="messageBody">Message</label><textarea id="messageBody">Hi {{Name}},
+
+How are you?
+
+Best regards,
+Your Name</textarea></div>
+<div class="tokens"><button class="token" data-token="{{Name}}">{{Name}}</button><button class="token" data-token="{{Email}}">{{Email}}</button><button class="token" data-token="{{Company}}">{{Company}}</button><button class="token" data-token="{{Role}}">{{Role}}</button></div>
+<div class="actions"><button id="previewBtn" class="btn primary">Preview campaign →</button></div>
+<div id="composeMsg" class="notice hidden"></div>
+<div style="margin-top:22px"><div class="panelhead"><div><h2>Personalized preview</h2><div class="muted">Preview does not send anything.</div></div><span class="muted">PREVIEW</span></div>
+<div class="emailcard"><div class="emailhead"><small>TO</small><strong id="previewTo">Preview a campaign to begin</strong><small style="margin-top:9px">SUBJECT</small><strong id="previewSubject">A quick hello</strong></div><div class="emailbody" id="previewBody">Your personalized email will appear here.</div></div>
+<div class="metrics"><div class="metric"><small>Eligible</small><strong id="mEligible">—</strong></div><div class="metric"><small>Invalid</small><strong id="mInvalid">—</strong></div><div class="metric"><small>Already sent</small><strong id="mSent">—</strong></div></div>
+<div id="previewMsg" class="notice hidden"></div>
+<div class="actions"><button id="confirmOpenBtn" class="btn danger" disabled>Review &amp; confirm send</button></div>
+</div>
+</section>
+</div>
+<div class="footer">MailFlow · GitHub Pages frontend + Google Apps Script backend · Use only for legitimate, permission-based outreach.</div>
+</main>
+</div>
+<div id="confirmOverlay" class="overlay" role="dialog" aria-modal="true">
+<div class="modal"><h2>Confirm campaign</h2><p>Review your subject, message and recipient list. The campaign can send up to 90 individual emails in this run, depending on remaining Google quota. This cannot be undone.</p>
+<div class="metrics"><div class="metric"><small>Eligible contacts</small><strong id="modalEligible">0</strong></div><div class="metric"><small>This run (max)</small><strong id="modalLimit">90</strong></div><div class="metric"><small>Quota remaining</small><strong id="modalQuota">—</strong></div></div>
+<label class="check"><input type="checkbox" id="confirmCheck"><span>I reviewed the recipients and message and intend to send this campaign.</span></label>
+<div class="field"><label for="typedSend">Type SEND to confirm</label><input id="typedSend" placeholder="SEND" autocomplete="off"></div>
+<div id="confirmMsg" class="notice error hidden"></div><div class="actions"><button id="cancelSendBtn" class="btn secondary">Cancel</button><button id="doSendBtn" class="btn danger" disabled>Confirm send</button></div>
+<div id="sendProgress" class="notice hidden"></div>
+</div></div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body></html>
