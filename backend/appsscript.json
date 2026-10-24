@@ -1,0 +1,6 @@
+{
+  "timeZone": "Asia/Kathmandu",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
+}
